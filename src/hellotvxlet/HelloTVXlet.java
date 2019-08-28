@@ -2,15 +2,12 @@ package hellotvxlet;
 
 import javax.tv.xlet.*;
 import java.awt.event.*;
-import java.util.Random.*;
 import java.awt.*;
 import org.dvb.event.*;
 import org.havi.ui.*;
 import org.havi.ui.event.*;
 
-
-
-public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserEventListener {
+public class HelloTVXlet implements Xlet, UserEventListener {
     
     
     static HScene myScene;
@@ -192,12 +189,6 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
         optionA.setBackgroundMode(HVisible.BACKGROUND_FILL);
         optionB.setBackgroundMode(HVisible.BACKGROUND_FILL);
         optionC.setBackgroundMode(HVisible.BACKGROUND_FILL);
-        optionA.setActionCommand("option A");
-        optionB.setActionCommand("option B");
-        optionC.setActionCommand("option C");
-        optionA.addHActionListener(this);
-        optionB.addHActionListener(this);
-        optionC.addHActionListener(this);
         myScene.add(optionA);
         myScene.add(optionB);
         myScene.add(optionC);
@@ -247,7 +238,6 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
                     }
                     if(!hasStarted){
                         System.out.println("Quiz Has Been Started, Enjoy!");
-                        // enter = quiz starten in homescreen
                         isRunning = true;
                         hasStarted = true;
                         writeToScene();
@@ -266,9 +256,6 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
                         }catch(InterruptedException exep){};
                         resetQuiz();
                         startMyScene();
-                        
-                        //resetQuiz();
-                        //startMyScene();
                     }
                     break;
             }
@@ -339,7 +326,6 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
             }
             else{
                 System.out.println("Completed All Questions");
-                
                 isDone = true;
             }
         }
@@ -354,7 +340,6 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
             }
             else{
                 System.out.println("Completed All Questions");
-                
                 isDone = true;
             }
         }
@@ -388,10 +373,7 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
         setSceneVisible();
         isRestarting = true;
     }
-    
-    
-    
-    
+
     public void pauseXlet() {
      
     }

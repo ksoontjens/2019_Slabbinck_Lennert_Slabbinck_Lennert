@@ -7,7 +7,7 @@ package hellotvxlet;
 
 /**
  *
- * @author student
+ * @author lennert slabbinck
  */
 public class Question {
     
@@ -27,10 +27,10 @@ public class Question {
         OptionA = a;
     }
     public void SetOptionB(String b){
-        OptionA = b;
+        OptionB = b;
     }
     public void SetOptionC(String c){
-        OptionA = c;
+        OptionC = c;
     }
     
     

@@ -32,6 +32,7 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
     private HText result;
     private HText questionText;
     private HText pointsText;
+    private HText currentQuestionText;
     private int isSelected = 0;
     
     private boolean isRunning = false;
@@ -74,7 +75,7 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
             {"A Pyjama","Trouble","A Homeparty"},
             {"A Blackboard","A bunny","A Snowball"},
             {"Yes","Nah","Maybe"},
-            {"Ice Ice Baby","How Much Is The Fish","Pina Colada"},
+            {"Ice Ice Baby","Pour un Flirt","Pina Colada"},
         };
         
         // Add vragen en antwoorden aan klasse var
@@ -85,20 +86,20 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
             questions[i].SetOptionC(answersStrings[i][0]);
             
             // Check of alles goed in ingelezen
-            System.out.println("Questionz a " + questions[i].GetOptionA());
-            System.out.println("Questionz b " + questions[i].GetOptionB());
-            System.out.println("Questionz c " + questions[i].GetOptionC());
+            // System.out.println("Questionz a " + questions[i].GetOptionA());
+            // System.out.println("Questionz b " + questions[i].GetOptionB());
+            // System.out.println("Questionz c " + questions[i].GetOptionC());
         }
         
         // Juiste antwoorden toevoegen
-        questions[0].SetCorrectAnswer(answersStrings[0][0]);
+        questions[0].SetCorrectAnswer(answersStrings[0][1]);
         questions[1].SetCorrectAnswer(answersStrings[1][1]);
         questions[2].SetCorrectAnswer(answersStrings[2][2]);
         questions[3].SetCorrectAnswer(answersStrings[3][1]);
         questions[4].SetCorrectAnswer(answersStrings[4][1]);
         questions[5].SetCorrectAnswer(answersStrings[5][0]);
         questions[6].SetCorrectAnswer(answersStrings[6][1]);
-        questions[7].SetCorrectAnswer(answersStrings[7][0]);
+        questions[7].SetCorrectAnswer(answersStrings[7][2]);
         questions[8].SetCorrectAnswer(answersStrings[8][1]);
         questions[9].SetCorrectAnswer(answersStrings[9][0]);
         
@@ -152,20 +153,27 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
         myScene = HSceneFactory.getInstance().getDefaultHScene();
         
         questionText = new HText(questions[currentQuestion].GetQuestion());
-        pointsText = new HText(currentPoints + " Points");
+        pointsText = new HText(currentPoints + " Correct");
+        currentQuestionText = new HText(currentQuestion + 1 + "/10");
         questionText.setLocation(30,100);
         pointsText.setLocation(30, 25);
+        currentQuestionText.setLocation(300,25);
         questionText.setSize(600,60);
         pointsText.setSize(150, 25);
+        currentQuestionText.setSize(150,25);
         pointsText.setBackground(Color.pink);
+        currentQuestionText.setBackground(Color.pink);
         questionText.setBackground(Color.pink);
         pointsText.setBackgroundMode(HVisible.BACKGROUND_FILL);
+        currentQuestionText.setBackgroundMode(HVisible.BACKGROUND_FILL);
         questionText.setBackgroundMode(HVisible.BACKGROUND_FILL);
         pointsText.setBordersEnabled(false);
+        currentQuestionText.setBordersEnabled(false);
         questionText.setBordersEnabled(false);
         
         myScene.add(questionText);
         myScene.add(pointsText);
+        myScene.add(currentQuestionText);
         
         // Get options
         optionA = new HTextButton(questions[currentQuestion].GetOptionA());
@@ -234,10 +242,6 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
                     break;
                 case HRcEvent.VK_ENTER:
                     if(isRunning){
-                        // enter = vraag beantwoorden
-                        if(isSelected == 0){System.out.println("User Answer: A");}
-                        if(isSelected == 1){System.out.println("User Answer: B");}
-                        if(isSelected == 2){System.out.println("User Answer: C");}
                         answerQuestion();
                     }
                     if(!hasStarted){
@@ -293,29 +297,30 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
         String A = questions[currentQuestion].GetOptionA();
         String B = questions[currentQuestion].GetOptionB();
         String C = questions[currentQuestion].GetOptionC();
-        System.out.println("Options: " + A + B + C);
         resetMyScene();
         
         if(isSelected == 0){
-            userInput = "a";
+            //userInput = "a";
+            userInput = questions[currentQuestion].GetOptionA();
         }
         if(isSelected == 1){
-            userInput = "b";
+            //userInput = "b";
+            userInput = questions[currentQuestion].GetOptionB();
         }
         if(isSelected == 2){
-            userInput = "c";
+            //userInput = "c";
+            userInput = questions[currentQuestion].GetOptionC();
         }
-        else{
-            userInput = "a";
-        }
-        System.out.println("User Picked Option: " + userInput);
+        
+        System.out.println(userInput + " >> " + correctAnswer);
+        
+        // Correct Antwoord
         if(userInput.equals(correctAnswer)){
             currentPoints = currentPoints + 1;
             currentQuestion = currentQuestion + 1;
-            System.out.println("Correct Answer");
             setSceneVisible();
-            if(currentQuestion < 11){
-                System.out.println(">> Loading Next Answer, Current Points: " + currentPoints);
+            if(currentQuestion < 10){
+                System.out.println(">> Correct! Loading Next Answer <<");
                 isSelected = 0;
                 writeToScene();
             }
@@ -325,12 +330,12 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
                 isDone = true;
             }
         }
+        // Fout Antwoord
         else{
             currentQuestion = currentQuestion + 1;
-            System.out.println("Wrong Answer, Correct Answer Was: " + correctAnswer);
             setSceneVisible();
-            if(currentQuestion < 11){
-                System.out.println(">> Loading Next Answer, Current Points: " + currentPoints);
+            if(currentQuestion < 10){
+                System.out.println(">> Wrong! Loading Next Answer <<");
                 isSelected = 0;
                 writeToScene();
             }

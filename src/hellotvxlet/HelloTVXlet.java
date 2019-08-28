@@ -38,6 +38,7 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
     private boolean isRunning = false;
     private boolean hasStarted = false;
     private boolean isDone = false;
+    private boolean isRestarting = false;
     
     public HelloTVXlet() {
         
@@ -99,7 +100,7 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
         questions[4].SetCorrectAnswer(answersStrings[4][1]);
         questions[5].SetCorrectAnswer(answersStrings[5][0]);
         questions[6].SetCorrectAnswer(answersStrings[6][1]);
-        questions[7].SetCorrectAnswer(answersStrings[7][2]);
+        questions[7].SetCorrectAnswer(answersStrings[7][0]);
         questions[8].SetCorrectAnswer(answersStrings[8][1]);
         questions[9].SetCorrectAnswer(answersStrings[9][0]);
         
@@ -252,10 +253,22 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
                         writeToScene();
                         //break;
                     }
-                    if(isDone){
-                        System.out.println("Quiz Has Been Completed, Good Job!");
+                    if(isRestarting){
                         resetQuiz();
                         startMyScene();
+                        isRestarting = false;
+                    }
+                    if(isDone){
+                        System.out.println("Quiz Has Been Completed, Good Job!");
+                        endGame();
+                        try{
+                            Thread.sleep(10000);
+                        }catch(InterruptedException exep){};
+                        resetQuiz();
+                        startMyScene();
+                        
+                        //resetQuiz();
+                        //startMyScene();
                     }
                     break;
             }
@@ -326,7 +339,7 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
             }
             else{
                 System.out.println("Completed All Questions");
-                endGame();
+                
                 isDone = true;
             }
         }
@@ -341,7 +354,7 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
             }
             else{
                 System.out.println("Completed All Questions");
-                endGame();
+                
                 isDone = true;
             }
         }
@@ -349,16 +362,16 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
     
     public void endGame(){
         resetMyScene();
-        endText = new HText("You have reached the end. Thanks for playing! ( Press ENTER to restart )");
+        endText = new HText("You have reached the end. ( Quiz will restart in 10s )");
         endText.setBackground(Color.pink);
         endText.setBackgroundMode(HVisible.BACKGROUND_FILL);
-        endText.setLocation(200, 20);
-        endText.setSize(500, 100);
+        endText.setLocation(30, 100);
+        endText.setSize(600, 60);
         endText.setBordersEnabled(false);
         myScene.add(endText);
         
         if(currentPoints > 0 && currentPoints < 6){
-            result = new HText("Aw Man, you only got " + currentPoints + " correct answers.");
+            result = new HText("Aw Man, you only got " + currentPoints + " correct answer(s).");
             result.setBackground(Color.red);
             result.setBackgroundMode(HVisible.BACKGROUND_FILL);
         }
@@ -367,13 +380,13 @@ public class HelloTVXlet implements Xlet, HActionListener, ActionListener, UserE
             result.setBackground(Color.green);
             result.setBackgroundMode(HVisible.BACKGROUND_FILL);
         }
-        result.setLocation(200, 120);
-        result.setSize(500, 100);
+        result.setLocation(30, 300);
+        result.setSize(600, 60);
         result.setBordersEnabled(false);
         myScene.add(result);
         
         setSceneVisible();
-        
+        isRestarting = true;
     }
     
     

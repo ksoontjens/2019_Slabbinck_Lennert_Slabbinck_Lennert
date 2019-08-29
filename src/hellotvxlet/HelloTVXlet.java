@@ -35,7 +35,6 @@ public class HelloTVXlet implements Xlet, UserEventListener {
     private boolean isRunning = false;
     private boolean hasStarted = false;
     private boolean isDone = false;
-    private boolean isRestarting = false;
     
     public HelloTVXlet() {
         
@@ -182,9 +181,9 @@ public class HelloTVXlet implements Xlet, UserEventListener {
         optionA.setLocation(75, 200);
         optionB.setLocation(75, 320);
         optionC.setLocation(75, 440);
-        optionA.setSize(150, 100);
-        optionB.setSize(150, 100);
-        optionC.setSize(150, 100);
+        optionA.setSize(200, 100);
+        optionB.setSize(200, 100);
+        optionC.setSize(200, 100);
         optionA.setBackground(Color.red);
         optionB.setBackground(Color.pink);
         optionC.setBackground(Color.pink);
@@ -233,14 +232,10 @@ public class HelloTVXlet implements Xlet, UserEventListener {
                         writeToScene();
                         //break;
                     }
-                    if(isRestarting){
-                        resetQuiz();
-                        startMyScene();
-                        isRestarting = false;
-                    }
                     if(isDone){
                         System.out.println("Quiz Has Been Completed, Good Job!");
                         endGame();
+                        // Restart quiz na 10s
                         try{
                             Thread.sleep(10000);
                         }catch(InterruptedException exep){};
@@ -368,7 +363,6 @@ public class HelloTVXlet implements Xlet, UserEventListener {
         myScene.add(result);
         
         setSceneVisible();
-        isRestarting = true;
     }
 
     public void pauseXlet() {

@@ -207,7 +207,6 @@ public class HelloTVXlet implements Xlet, UserEventListener {
     }
     
    
-
     // UserInput: isSelected = 0 = a
     // isSelected( 0 = a, 1 = b, 2 = c)
     public void userEventReceived(UserEvent e){

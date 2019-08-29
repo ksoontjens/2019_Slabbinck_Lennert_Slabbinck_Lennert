@@ -277,15 +277,11 @@ public class HelloTVXlet implements Xlet, UserEventListener {
     
     // Antwoord valideren
     public void answerQuestion(){
-        String userInput = new String("");
+        String userInput = "";
         
         // Juist anwoord ophalen
         String correctAnswer = questions[currentQuestion].CorrectAnswer;
         
-        // Mogelijke antwoorden ophalen
-        String A = questions[currentQuestion].GetOptionA();
-        String B = questions[currentQuestion].GetOptionB();
-        String C = questions[currentQuestion].GetOptionC();
         resetMyScene();
         
         if(isSelected == 0){

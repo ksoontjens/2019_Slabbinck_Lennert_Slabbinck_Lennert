@@ -151,6 +151,7 @@ public class HelloTVXlet implements Xlet, UserEventListener {
         hasStarted = true;
         myScene = HSceneFactory.getInstance().getDefaultHScene();
         
+        // Vraag en Punten en Current Vraag toevoegen
         questionText = new HText(questions[currentQuestion].GetQuestion());
         pointsText = new HText(currentPoints + " Correct");
         currentQuestionText = new HText(currentQuestion + 1 + "/10");
@@ -279,31 +280,35 @@ public class HelloTVXlet implements Xlet, UserEventListener {
         }
     }
     
+    // Antwoord valideren
     public void answerQuestion(){
         String userInput = new String("");
+        
+        // Juist anwoord ophalen
         String correctAnswer = questions[currentQuestion].CorrectAnswer;
         
+        // Mogelijke antwoorden ophalen
         String A = questions[currentQuestion].GetOptionA();
         String B = questions[currentQuestion].GetOptionB();
         String C = questions[currentQuestion].GetOptionC();
         resetMyScene();
         
         if(isSelected == 0){
-            //userInput = "a";
+            //userInput = vraag a;
             userInput = questions[currentQuestion].GetOptionA();
         }
         if(isSelected == 1){
-            //userInput = "b";
+            //userInput = vraag b;
             userInput = questions[currentQuestion].GetOptionB();
         }
         if(isSelected == 2){
-            //userInput = "c";
+            //userInput = vraag c;
             userInput = questions[currentQuestion].GetOptionC();
         }
         
         System.out.println(userInput + " >> " + correctAnswer);
         
-        // Correct Antwoord
+        // If Correct Antwoord
         if(userInput.equals(correctAnswer)){
             currentPoints = currentPoints + 1;
             currentQuestion = currentQuestion + 1;
@@ -318,7 +323,7 @@ public class HelloTVXlet implements Xlet, UserEventListener {
                 isDone = true;
             }
         }
-        // Fout Antwoord
+        // If Fout Antwoord
         else{
             currentQuestion = currentQuestion + 1;
             setSceneVisible();
@@ -334,6 +339,7 @@ public class HelloTVXlet implements Xlet, UserEventListener {
         }
     }
     
+    // Einde spel
     public void endGame(){
         resetMyScene();
         endText = new HText("You have reached the end. ( Quiz will restart in 10s )");
@@ -344,11 +350,13 @@ public class HelloTVXlet implements Xlet, UserEventListener {
         endText.setBordersEnabled(false);
         myScene.add(endText);
         
-        if(currentPoints > 0 && currentPoints < 6){
+        // minder dan 5 punten 
+        if(currentPoints > 0 && currentPoints < 5){
             result = new HText("Aw Man, you only got " + currentPoints + " correct answer(s).");
             result.setBackground(Color.red);
             result.setBackgroundMode(HVisible.BACKGROUND_FILL);
         }
+        // meer dan 5 punten
         else{
             result = new HText("GG, you got " + currentPoints + " correct answers!");
             result.setBackground(Color.green);

@@ -1,6 +1,4 @@
-# Digital Broadcast - P.4 - Herexamen
-
-Slabbinck Lennert 2019
+# Digital Broadcast - P.4 - Herexamen - Lennert Slabbinck
 
 ## Application
 
@@ -12,4 +10,6 @@ After 10 seconds the end-game screen will close and the quiz will restart.
 
 - Use the **UP/DOWN ARROW KEYS** to navigate between the possible answers.
 - Use the **ENTER KEY** to select the correct answer.
+
+
 

@@ -140,6 +140,7 @@ public class HelloTVXlet implements Xlet, UserEventListener {
     }
     
     public void resetMyScene(){
+        // Remove all objects from scecne
         myScene.removeAll();
     }
     
@@ -196,24 +197,13 @@ public class HelloTVXlet implements Xlet, UserEventListener {
         setSceneVisible();
     }
     
-    
-    public void actionPerformed(ActionEvent e){
-        String useractions = e.getActionCommand();
-        if(useractions.equals("OptionA")){
-            optionA.setBackground(Color.red);
-            optionA.repaint();
-            myScene.add(optionA);
-        }
-        myScene.validate();
-        myScene.repaint();
-    }
-    
+    // Catch user input
     public void startXlet() {
-      EventManager eventmanager = EventManager.getInstance();
-      UserEventRepository userRepo = new UserEventRepository("Keys");
-      userRepo.addAllArrowKeys();
-      userRepo.addKey(HRcEvent.VK_ENTER);
-      eventmanager.addUserEventListener(this, userRepo);
+    EventManager eventmanager = EventManager.getInstance();
+    UserEventRepository userRepo = new UserEventRepository("Keys");
+    userRepo.addAllArrowKeys();
+    userRepo.addKey(HRcEvent.VK_ENTER);
+    eventmanager.addUserEventListener(this, userRepo);
     }
     
    
